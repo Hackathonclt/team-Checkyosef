@@ -1,0 +1,25 @@
+extends landing
+
+block javascript
+  script(type='text/javascript', src= "/js/land-scatters.js")
+
+block content
+  div.container
+    div.row
+      div.span3.column
+      div.span6.column
+        h1=title
+        
+    div.row
+      div.span2.column
+      div.span4.column
+        select(id="x")
+      div.span1.column
+        h2 VS.
+      div.span4.column
+        select(id="y")
+        
+    div.row
+      div.span4.column
+      div.span4.column
+        a.btn.btn-primary.btn-large.generate-scatter(href="#") Plot it!
