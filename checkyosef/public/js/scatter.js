@@ -1,11 +1,9 @@
 var plot = [];
 
-//plot.push([comparison.x, comparison.y]);
-
 var incrementors = [];
 
 for (var i = 0; i < customers.length; i++) {
-  var xAxis = parseInt(customers[i][comparison.x]);
+  var xAxis = parseInt(customers[i].HOUSEHOLD_NUM);
   if (customers[i].State) {
  
    var inc = 1;
@@ -15,17 +13,17 @@ for (var i = 0; i < customers.length; i++) {
      2: ''
    };
    if (plot[xAxis]){
-     var newX = parseInt(customers[i][comparison.x] * 100) / 100;
+     var newX = parseInt(customers[i][comparison.x] * 10000) / 10000;
 
-     var incrementor = parseInt(customers[i][comparison.y] * 100);
+     var incrementor = parseInt(customers[i][comparison.y] * 10000);
      
-     var transtotal = (incrementors[xAxis][0] * 100 + incrementor) / 100;   
+     var transtotal = (incrementors[xAxis][0] * 10000 + incrementor) / 10000;   
      incrementors[xAxis][0] = transtotal;  
      
      var count = parseInt(incrementors[xAxis][1]) + 1;
      incrementors[xAxis][1] = count;
      
-     var newY = (incrementors[xAxis][0] / incrementors[xAxis][1]) / 100;
+     var newY = (incrementors[xAxis][0] / incrementors[xAxis][1]) / 10000;
   
      plot[xAxis] = [newX];
    } else {
@@ -54,13 +52,15 @@ for (var i = 0; i < incrementors.length; i++) {
 
 plot = cleanArray(plot);
 
+plot.unshift([comparison.x, comparison.y]);
+
 console.log(plot);
 
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawChart);
 function drawChart() {
   var data = google.visualization.arrayToDataTable(plot);
-  //console.log(data);
+
   var options = {
     title: comparison.x + ' Vs. ' + comparison.y,
     hAxis: {

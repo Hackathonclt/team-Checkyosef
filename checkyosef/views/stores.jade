@@ -1,0 +1,42 @@
+extends layout
+
+block subnav
+  div.subnav.subnav-fixed
+      ul.nav.nav-pills
+        li
+          a(href='/heatmap/store/1') Store 1
+        li
+          a(href='/heatmap/store/2') Store 2
+        li
+          a(href='/heatmap/store/3') Store 3
+        li
+          a(href='/heatmap/store/4') Store 4
+        li
+          a(href='/heatmap/store/5') Store 5
+
+block content
+  div.container
+  
+    ul.breadcrumb
+      li 
+        a(href="/") Home
+        span.divider /
+      li.active Stores
+  
+    h2 Information By Store
+  
+    table.table.table-bordered.table-striped.table-hover
+      thead
+        tr
+          th Store #
+          th Lat
+          th Long
+          th 
+          
+      for store in locals.stores
+        tr  
+          td ##{store.STORE}
+          td #{store.LATITUDE}
+          td #{store.LONGITUDE} 
+          td
+            a(href='/heatmap/store/' + store.STORE) Heatmap

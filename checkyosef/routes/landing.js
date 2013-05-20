@@ -55,7 +55,7 @@ exports.graphs = function(req, res) {
 
 exports.scatters = function(req, res) {  
   res.render('land-scatters', { 
-    title: 'Median Household Income vs. Transaction Amount', 
+    title: 'Select Data to Plot:', 
     locals: {
       segments: [{
         title: 'beer'

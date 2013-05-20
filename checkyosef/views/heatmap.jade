@@ -1,0 +1,102 @@
+doctype 5
+html
+  head
+    title= title
+    
+    link(rel='stylesheet', href='//bootswatch.com/united/bootstrap.min.css')
+    link(rel='stylesheet', href='//bootswatch.com/default/bootstrap-responsive.min.css')
+    link(rel='stylesheet', href='//bootswatch.com/css/font-awesome.min.css')
+    link(rel='stylesheet', href='//bootswatch.com/css/bootswatch.css')
+    link(rel='stylesheet', href='/css/jquery-ui.css')
+    link(rel='stylesheet', href='/css/style.css')
+    script(type='text/javascript', src= "//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js")
+    script(type='text/javascript', src= "/js/jquery-ui.js")
+    script(type='text/javascript', src= "/js/tabs.js")
+   
+    
+  body
+  
+    div.navbar.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          a.btn.btn-navbar.collapsed 
+          a.brand(href="/") HackathonCLT
+          ul.nav
+            li
+              a(href='/segments') Segments
+            li
+              a(href='/stores') Stores
+              
+    block subnav
+    
+    div.container
+
+      h1= title
+      
+      block breadcrumb
+      
+      div#map-canvas
+        img.img-loading(src='/css/images/ajax-loader.gif')
+       script(type='text/javascript')
+          var customers =!{JSON.stringify(locals.customers)}
+          var stores =!{JSON.stringify(locals.stores)}
+      
+      span.btn.controls-toggle Visualizer Controls
+        i.icon-cog
+      
+      div.controls-wrap.well
+        div.slider-wrap
+          span.slider-title opacity
+          div#slider-opacity.slider
+          span#display-opacity.slider-display 0.9
+        
+        div.slider-wrap
+          span.slider-title maxIntensity
+          div#slider-maxIntensity.slider 
+          span#display-maxIntensity.slider-display 100
+        
+        div.slider-wrap
+          span.slider-title radius
+          div#slider-radius.slider 
+          span#display-radius.slider-display 10
+    
+    script(type="text/javascript", src= "https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization")
+    script(type='text/javascript', src= "/js/heatmap.js")
+    script(type='text/javascript', src= "/js/controls.js")
+      
+    
+    hr
+    
+    footer.container
+      div.row
+        div.span4
+          h3 Store Heatmaps
+          dl
+            dt
+              a(href="/stores") All Stores
+            dt
+              a(href="/heatmap/store/1") Store #1
+            dt
+              a(href="/heatmap/store/2") Store #2
+            dt
+              a(href="/heatmap/store/3") Store #3
+            dt
+              a(href="/heatmap/store/4") Store #4
+            dt
+              a(href="/heatmap/store/5") Store #5
+       
+        div.span4
+          h3 Segment Heatmaps
+          dl
+            dt
+              a(href="/segments") All Segments
+            dt
+              a(href="/heatmap/segment/beer") Beer
+            dt
+              a(href="/heatmap/segment/wine") Wine
+            dt
+              a(href="/heatmap/segment/bakery") Bakery
+            dt
+              a(href="/heatmap/segment/deli") Deli
+        
+        div.span4

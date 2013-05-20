@@ -64,12 +64,12 @@ exports.heatmap = function(req, res) {
     }
   }
   
+  var weighted = req.params.weighted;
+  
   title = storeString + segmentString;
   
-  if (req.params.weighted == 'true') {
-    var weighted = true;
-  } else {
-    var weighted = false;
+  if(weighted) {
+    title += ' weighted by ' + weighted;
   }
   
   database.collection('customerData', function(err, collection) {
@@ -181,16 +181,15 @@ exports.graph = function(req, res) {
 
 exports.scatter = function(req, res, next) {
     
-  var searchParams = {};
+  var searchParams = {
+  };
   var storeWhitelist = [1,2,3,4,5];
   var segmentWhitelist = ['BEER', 'WINE', 'DELI', 'BAKERY'];
   
   var comparisonWhitelist = ['WINE','BEER','BAKERY','DELI','HOUSEHOLD_NUM','HOUSE_LATITUDE','HOUSE_LONGITUDE','SEG_ID','DATE','STORE','LONGITUDE','LATITUDE','Total_Transaction','Distance','Store_Zip','Customer_Zip','HOUSEHOLD_','STATEFP','COUNTYFP','TRACTCE','NAME','Tract_Code','County,State','Population','Pct_Pop_Under_5','Pct_Pop_5_to_17','Pct_Pop_65_Plus','Median_Age','Pct_White','Pct_Black','Pct_Native','Pct_Asian','Pct_NHPI','Pct_Hispanic','Pct_HS_Grad','Pct_Clg_Grad','Pct_Non_Eng_Speakers','Median_HH_Inc','Median_Fam_Inc','Pct_Poverty','Median_House_Val'];
   
   comparison = {
-    //x: 'Median_HH_Inc',
     x: req.params.x,
-    //y: 'Total_Transaction' //req.params.y
     y: req.params.y
   }
   
@@ -200,7 +199,7 @@ exports.scatter = function(req, res, next) {
       searchParams.STORE = store;
       storeString = 'Store #' + store;
     } else {
-      storeString = 'Total ';
+      storeString = 'total ';
     }
   }
   
@@ -214,10 +213,15 @@ exports.scatter = function(req, res, next) {
     }
   }
   
+   if (req.params.distance) {
+    distance = parseInt(req.params.distance);
+    searchParams['Distance'] = { $lte: distance };
+  }
+  
   var x = 'Median_HH_Inc';
   var y = 'Total_Transaction';
   
-  title = storeString + segmentString;
+  title = comparison.x + ' vs. ' + comparison.y + ' for ' + storeString + segmentString;
   
   database.collection('customerData', function(err, collection) {
     collection.find(searchParams)

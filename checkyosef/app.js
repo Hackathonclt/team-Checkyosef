@@ -35,7 +35,7 @@ app.get('/heatmap/store/:store/segment/:segment/:weighted?*', visualization.heat
 app.get('/graphs', landing.graphs);
 app.get('/graph/store/:store/segment/:segment', visualization.graph);
 app.get('/scatters', landing.scatters);
-app.get('/scatter/:x/:y/store/:store/segment/:segment', visualization.scatter);
+app.get('/scatter/:x/:y/store/:store/segment/:segment/:distance?*', visualization.scatter);
 //app.get('/pie/by/:method/select/:select/', visualization.pie);
 
 http.createServer(app).listen(app.get('port'), function(){
